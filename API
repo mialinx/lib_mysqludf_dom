@@ -1,0 +1,75 @@
+NAME
+
+	lib_mysqludf_dom
+
+DESCRIPTION
+	
+	UDF libraries for dom manipulation with XML strings.
+	Replaces standard ExtractValue and UpdateXML functions,
+	using libxml2 library. Adds support of xpath standard
+	and namespaces.
+
+ERROR HANDLING
+
+	Mysql UDF function able to report error detected at query 
+	parsing stage. If errors occurs at execution stage 
+	(row-specific error), any of dom_* functions returns NULL 
+	instead of marking *err pointer. 
+	This does not correspond to UDF manual, but allows you to 
+	determine which rows the function failed to handle.
+
+FUNCTIONS
+
+	dom_xpath(xml, xpath, ns_string)
+	
+	Evaluates xpath expression agains xml, then casts result
+	of xpath evaluation to string, using libxml's
+	xmlXPathCastToString() function. Note, this function
+	does not returns XML, just a string. If you need to get
+	XML representation of some node - use dom_extract_node
+
+	dom_extract_node(xml, xpath, ns_string)
+
+	Extract node, pointed by xpath. If result of xpath is node set, 
+	containing more or less than one node, funtion will return error. 
+	If node is an element, function returns well-formed xml, 
+	otherwise it returns textual representation of the node. 
+
+	dom_delete_node(xml, xpath, ns_string)
+
+	Delete all nodes, pointed by xpath document. Returns 
+	well-formed xml, representing new document.
+
+	dom_replace_node(xml, xpath, ns_string, value)
+	dom_replace_node(xml, xpath, ns_string, value AS TEXT)
+	dom_replace_node(xml, xpath, ns_string, value AS XML)
+	
+	Replaces all nodes, pointed by xpath with value. By default, or
+	if TEXT name for value argument specified, value inserted 
+	in dom just as text node, regardless of content of the value. 
+	If value argument passed with XML name, it will be parsed as 
+	XML document and will be inserted in dom as subtree.
+	Returns well-fromed xml, representing new document.
+
+	dom_append_child(xml, xpath, ns_string, value)
+	dom_append_child(xml, xpath, ns_string, value AS TEXT)
+	dom_append_child(xml, xpath, ns_string, value AS XML)
+
+	Appends a child to all nodes pointed by xpath. Handling of
+	XML name of 4th argument is the same. XML means that we should
+	try to parse value and insert in as subtree.
+	Returns well-formed xml, representing new document.
+
+NAMESPACE SYNTAX
+	
+	All functions accpets ns_string, containing namespace - prefix
+	mapping for xpath context.
+
+	Ns string contains one or more ns_pairs
+	Each ns_pair - is ordinary xml ns declaration
+	ns_pairs are separated by any blank characters
+
+	Example:
+	'xmlns:a = "one_ns"    xmlns:prefix1="some1" xmlns:prefix2="some2"'
+	binds namespaces "one_ns" with prefix "a" and so on..
+

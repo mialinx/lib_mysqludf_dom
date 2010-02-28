@@ -1,0 +1,10 @@
+use mysql;
+
+error 0; select dom_extract_node();
+select dom_extract_node('<a><b><c/>1<c/></b></a>', '/a/b', NULL);
+select dom_extract_node('<a><b><c/>1<c/></b></a>', '/a/b', '');
+select dom_extract_node('<a xmlns:d="http://d" xmlns="http://a"><b><d:c/></b></a>','/x:a/x:b','xmlns:x="http://a"');
+error 0; select dom_extract_node('<a xmlns="http://d"><b><c/></b></a>','/a/b','');
+error 0; select dom_extract_node('<a><b/><b/></a>', '/a/b', '');
+error 0; select dom_extract_node('<a><b/></b></a>', '/a/b', '');
+error 0; select dom_extract_node('<a><b/><b/></a>', '/a/buu::b', '');

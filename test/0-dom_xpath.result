@@ -1,0 +1,22 @@
+use mysql;
+select dom_xpath();
+ERROR HY000: dom_xpath() requires 3 arguments
+select dom_xpath('<a><b>1</b></a>', '/a/b', NULL);
+dom_xpath('<a><b>1</b></a>', '/a/b', NULL)
+1
+select dom_xpath('<a><b>1</b></a>', '/a/b', '');
+dom_xpath('<a><b>1</b></a>', '/a/b', '')
+1
+select dom_xpath('<a xmlns="http://a"><b xmlns="http://b">33</b></a>','/xa:a/xb:b/text()','xmlns:xa="http://a" xmlns:xb="http://b"');
+dom_xpath('<a xmlns="http://a"><b xmlns="http://b">33</b></a>','/xa:a/xb:b/text()','xmlns:xa="http://a" xmlns:xb="http://b"')
+33
+select dom_xpath('<xa:a xmlns:xa="http://a"><xa:c/><xa:c/></xa:a>','count(//xx:c)','xmlns:xx="http://a"');
+dom_xpath('<xa:a xmlns:xa="http://a"><xa:c/><xa:c/></xa:a>','count(//xx:c)','xmlns:xx="http://a"')
+2
+select dom_xpath('<a></b>','/a','');
+ERROR HY000: can't parse xml
+select dom_xpath('<a></a>','tt::a','');
+ERROR HY000: can't compile xpath
+select dom_xpath('<a></a>','//zz:a','');
+dom_xpath('<a></a>','//zz:a','')
+NULL

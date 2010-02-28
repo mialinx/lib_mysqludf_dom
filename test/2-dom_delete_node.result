@@ -1,0 +1,22 @@
+use mysql;
+select dom_delete_node();
+ERROR HY000: dom_delete_node() requires 3 arguments
+select dom_delete_node('<a><b/><b/><c/></a>','/a/b', NULL);
+dom_delete_node('<a><b/><b/><c/></a>','/a/b', NULL)
+<a><c/></a>
+select dom_delete_node('<a><b/><b/><c/></a>','/a/b', '');
+dom_delete_node('<a><b/><b/><c/></a>','/a/b', '')
+<a><c/></a>
+select dom_delete_node('<a><b/><b/><c/></a>','/a/b[1]', '');
+dom_delete_node('<a><b/><b/><c/></a>','/a/b[1]', '')
+<a><b/><c/></a>
+select dom_delete_node('<a><b/><b/><c/></a>','/a/d', '');
+dom_delete_node('<a><b/><b/><c/></a>','/a/d', '')
+<a><b/><b/><c/></a>
+select dom_delete_node('<a><b xmlns="http://z"/><b/><c><b xmlns="http://z"/></c></a>','//z:b', 'xmlns:z="http://z"');
+dom_delete_node('<a><b xmlns="http://z"/><b/><c><b xmlns="http://z"/></c></a>','//z:b', 'xmlns:z="http://z"')
+<a><b/><c/></a>
+select dom_delete_node('<a><a>', '', '');
+ERROR HY000: can't parse xml
+select dom_delete_node('<a></a>', '/ff::a', '');
+ERROR HY000: can't compile xpath

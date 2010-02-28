@@ -1,0 +1,22 @@
+use mysql;
+select dom_extract_node();
+ERROR HY000: dom_extract_node() requires 3 arguments
+select dom_extract_node('<a><b><c/>1<c/></b></a>', '/a/b', NULL);
+dom_extract_node('<a><b><c/>1<c/></b></a>', '/a/b', NULL)
+<b><c/>1<c/></b>
+select dom_extract_node('<a><b><c/>1<c/></b></a>', '/a/b', '');
+dom_extract_node('<a><b><c/>1<c/></b></a>', '/a/b', '')
+<b><c/>1<c/></b>
+select dom_extract_node('<a xmlns:d="http://d" xmlns="http://a"><b><d:c/></b></a>','/x:a/x:b','xmlns:x="http://a"');
+dom_extract_node('<a xmlns:d="http://d" xmlns="http://a"><b><d:c/></b></a>','/x:a/x:b','xmlns:x="http://a"')
+<b xmlns="http://a" xmlns:d="http://d"><d:c/></b>
+select dom_extract_node('<a xmlns="http://d"><b><c/></b></a>','/a/b','');
+dom_extract_node('<a xmlns="http://d"><b><c/></b></a>','/a/b','')
+NULL
+select dom_extract_node('<a><b/><b/></a>', '/a/b', '');
+dom_extract_node('<a><b/><b/></a>', '/a/b', '')
+NULL
+select dom_extract_node('<a><b/></b></a>', '/a/b', '');
+ERROR HY000: can't parse xml
+select dom_extract_node('<a><b/><b/></a>', '/a/buu::b', '');
+ERROR HY000: can't compile xpath

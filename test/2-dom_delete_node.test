@@ -1,0 +1,10 @@
+use mysql;
+
+error 0; select dom_delete_node();
+select dom_delete_node('<a><b/><b/><c/></a>','/a/b', NULL);
+select dom_delete_node('<a><b/><b/><c/></a>','/a/b', '');
+select dom_delete_node('<a><b/><b/><c/></a>','/a/b[1]', '');
+select dom_delete_node('<a><b/><b/><c/></a>','/a/d', '');
+select dom_delete_node('<a><b xmlns="http://z"/><b/><c><b xmlns="http://z"/></c></a>','//z:b', 'xmlns:z="http://z"');
+error 0; select dom_delete_node('<a><a>', '', '');
+error 0; select dom_delete_node('<a></a>', '/ff::a', '');

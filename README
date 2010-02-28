@@ -1,0 +1,26 @@
+MySQL UDF Repository
+lib_mysqludf_dom
+
+-----------------------
+
+The lib_mysqludf_dom library provides functions for evaluating xpath
+expressions and modifing XML data. lib_mysqludf_dom is based on libxml2
+library, provides full support of xpath standard and namespaces.
+These functions are intended to replace standard ExtractValue and UpdateXML 
+functions. For information about using this library, please see API
+
+-----------------------
+
+To build:
+ ./configure
+ make && make install
+
+To then load the functions:
+ mysql -u root -p < installdb.sql
+
+To remove the library from your system:
+ mysql -u root -p < uninstalldb.sql
+ make uninstall
+
+To run tests
+ make test

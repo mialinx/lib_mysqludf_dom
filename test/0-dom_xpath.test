@@ -1,0 +1,10 @@
+use mysql;
+
+error 0; select dom_xpath();
+select dom_xpath('<a><b>1</b></a>', '/a/b', NULL);
+select dom_xpath('<a><b>1</b></a>', '/a/b', '');
+select dom_xpath('<a xmlns="http://a"><b xmlns="http://b">33</b></a>','/xa:a/xb:b/text()','xmlns:xa="http://a" xmlns:xb="http://b"');
+select dom_xpath('<xa:a xmlns:xa="http://a"><xa:c/><xa:c/></xa:a>','count(//xx:c)','xmlns:xx="http://a"');
+error 0; select dom_xpath('<a></b>','/a','');
+error 0; select dom_xpath('<a></a>','tt::a','');
+error 0; select dom_xpath('<a></a>','//zz:a','');

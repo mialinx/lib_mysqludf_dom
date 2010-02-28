@@ -1,0 +1,13 @@
+use mysql;
+
+error 0; select dom_replace_node();
+select dom_replace_node('<a><b>1</b></a>', '/a/b/text()', '', '2');
+select dom_replace_node('<a><b>1</b></a>', '/a/b/text()', '', '<d>33</d>' AS TEXT);
+select dom_replace_node('<a><b>1</b></a>', '/a/b/text()', '', '<d>33</d>' AS XML);
+select dom_replace_node('<a><b>1</b><b>2</b></a>', '/a/b/text()', NULL, 'qwerty');
+select dom_replace_node('<a><b>1</b><b>2</b></a>', '/a/b/text()', NULL, '<q>wert</q>' AS XML);
+#TODO proper handle recursive elements.
+#select dom_replace_node('<a><b><b></b></b></a>', '//b', '<d/>' AS XML);
+error 0; select dom_replace_node('<a><a>','','','');
+error 0; select dom_replace_node('<a/>','GG::g','','');
+error 0; select dom_replace_node('<a/>','/a','','not xml' AS XML);

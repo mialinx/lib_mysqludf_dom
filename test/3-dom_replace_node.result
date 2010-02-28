@@ -1,0 +1,24 @@
+use mysql;
+select dom_replace_node();
+ERROR HY000: dom_replace_node() requires 4 arguments
+select dom_replace_node('<a><b>1</b></a>', '/a/b/text()', '', '2');
+dom_replace_node('<a><b>1</b></a>', '/a/b/text()', '', '2')
+<a><b>2</b></a>
+select dom_replace_node('<a><b>1</b></a>', '/a/b/text()', '', '<d>33</d>' AS TEXT);
+dom_replace_node('<a><b>1</b></a>', '/a/b/text()', '', '<d>33</d>' AS TEXT)
+<a><b>&lt;d&gt;33&lt;/d&gt;</b></a>
+select dom_replace_node('<a><b>1</b></a>', '/a/b/text()', '', '<d>33</d>' AS XML);
+dom_replace_node('<a><b>1</b></a>', '/a/b/text()', '', '<d>33</d>' AS XML)
+<a><b><d>33</d></b></a>
+select dom_replace_node('<a><b>1</b><b>2</b></a>', '/a/b/text()', NULL, 'qwerty');
+dom_replace_node('<a><b>1</b><b>2</b></a>', '/a/b/text()', NULL, 'qwerty')
+<a><b>qwerty</b><b>qwerty</b></a>
+select dom_replace_node('<a><b>1</b><b>2</b></a>', '/a/b/text()', NULL, '<q>wert</q>' AS XML);
+dom_replace_node('<a><b>1</b><b>2</b></a>', '/a/b/text()', NULL, '<q>wert</q>' AS XML)
+<a><b><q>wert</q></b><b><q>wert</q></b></a>
+select dom_replace_node('<a><a>','','','');
+ERROR HY000: can't parse xml
+select dom_replace_node('<a/>','GG::g','','');
+ERROR HY000: can't compile xpath
+select dom_replace_node('<a/>','/a','','not xml' AS XML);
+ERROR HY000: can't parse xml

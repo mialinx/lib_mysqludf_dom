@@ -1,0 +1,24 @@
+use mysql;
+select dom_append_child();
+ERROR HY000: dom_append_child() requires 4 arguments
+select dom_append_child('<a><b>1</b></a>', '/a/b/text()', '', '2');
+dom_append_child('<a><b>1</b></a>', '/a/b/text()', '', '2')
+<a><b>12</b></a>
+select dom_append_child('<a><b>1</b></a>', '/a/b/text()', '', '<d>33</d>' AS TEXT);
+dom_append_child('<a><b>1</b></a>', '/a/b/text()', '', '<d>33</d>' AS TEXT)
+<a><b>1&lt;d&gt;33&lt;/d&gt;</b></a>
+select dom_append_child('<a><b>1</b></a>', '/a/b/text()', '', '<d>33</d>' AS XML);
+dom_append_child('<a><b>1</b></a>', '/a/b/text()', '', '<d>33</d>' AS XML)
+<a><b>1</b></a>
+select dom_append_child('<a><b>1</b><b>2</b></a>', '/a/b/text()', NULL, 'qwerty');
+dom_append_child('<a><b>1</b><b>2</b></a>', '/a/b/text()', NULL, 'qwerty')
+<a><b>1qwerty</b><b>2qwerty</b></a>
+select dom_append_child('<a><b>1</b><b>2</b></a>', '/a/b/text()', NULL, '<q>wert</q>' AS XML);
+dom_append_child('<a><b>1</b><b>2</b></a>', '/a/b/text()', NULL, '<q>wert</q>' AS XML)
+<a><b>1</b><b>2</b></a>
+select dom_append_child('<a><a>','','','');
+ERROR HY000: can't parse xml
+select dom_append_child('<a/>','GG::g','','');
+ERROR HY000: can't compile xpath
+select dom_append_child('<a/>','/a','','not xml' AS XML);
+ERROR HY000: can't parse xml
