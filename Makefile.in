@@ -714,7 +714,7 @@ uninstall-am: uninstall-libLTLIBRARIES
 mrproper:
 	make clean
 	make maintainer-clean
-	rm -rf config.guess config.h.* config.status configure missing config.sub ltmain.sh depcomp aclocal.m4 install.sh config.log compile Makefile.in doc/html *.loT mkinstalldirs install-sh *~
+	rm -rf config.guess config.h.log config.status missing config.sub ltmain.sh depcomp aclocal.m4 install.sh config.log compile doc/html *.loT mkinstalldirs install-sh *~
 
 installdb: 
 	$(MYSQL) < ./installdb.sql
